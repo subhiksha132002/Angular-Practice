@@ -1,0 +1,113 @@
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card shadow-lg w-75">
+    <div class="card-header text-center">
+      <h4>Create Product</h4>
+    </div>
+
+    <div class="card-body">
+      <form #productForm="ngForm" (ngSubmit)="onSaveProduct(productForm)">
+
+        
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="ProductName" class="form-label">Product Name</label>
+          </div>
+          <div class="col-6">
+            <input type="text" [(ngModel)]="newProductObj.ProductName" name="name" class="form-control" id="ProductName" placeholder="Enter product name" required />
+          </div>
+        </div>
+
+       
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="ProductSku" class="form-label">Product SKU</label>
+          </div>
+          <div class="col-6">
+            <input type="text" [(ngModel)]="newProductObj.ProductSku" name="sku" class="form-control" id="ProductSku" placeholder="Enter product SKU" required />
+          </div>
+        </div>
+
+        
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="ProductPrice" class="form-label">Product Price</label>
+          </div>
+          <div class="col-6">
+            <input type="number" [(ngModel)]="newProductObj.ProductPrice" name="price" class="form-control" id="ProductPrice" placeholder="Enter product price" required />
+          </div>
+        </div>
+
+        
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="ProductShortName" class="form-label">Product Short Name</label>
+          </div>
+          <div class="col-6">
+            <input type="text" [(ngModel)]="newProductObj.ProductShortName" name="shortname" class="form-control" id="ProductShortName" placeholder="Enter product short name" required />
+          </div>
+        </div>
+
+        
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="ProductDescription" class="form-label">Product Description</label>
+          </div>
+          <div class="col-6">
+            <textarea [(ngModel)]="newProductObj.ProductDescription" name="description" class="form-control" id="ProductDescription" placeholder="Enter product description" rows="3" required></textarea>
+          </div>
+        </div>
+
+        
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="CreatedDate" class="form-label">Created Date</label>
+          </div>
+          <div class="col-6">
+            <input type="date" [(ngModel)]="newProductObj.CreatedDate" name="createddate" class="form-control" id="CreatedDate" required />
+          </div>
+        </div>
+
+        
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="DeliveryTimeSpan" class="form-label">Delivery Time Span</label>
+          </div>
+          <div class="col-6">
+            <input type="text" [(ngModel)]="newProductObj.DeliveryTimeSpan" name="delivery" class="form-control" id="DeliveryTimeSpan" placeholder="Enter delivery time span" required />
+          </div>
+        </div>
+
+        
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="CategoryId" class="form-label">Category ID</label>
+          </div>
+          <div class="col-6">
+            <input type="number" [(ngModel)]="newProductObj.CategoryId" name="categoryid" class="form-control" id="CategoryId" placeholder="Enter category ID" required />
+          </div>
+        </div>
+
+       
+        <div class="row mb-3">
+          <div class="col-6 text-start">
+            <label for="ProductImageUrl" class="form-label">Product Image URL</label>
+          </div>
+          <div class="col-6">
+            <input type="text" [(ngModel)]="newProductObj.ProductImageUrl" name="image" class="form-control" id="ProductImageUrl" placeholder="Enter product image URL" required />
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          
+          <button type="button" (click)="onReset(productForm)" class="btn btn-secondary w-45"><i class="fa fa-times"></i> Reset</button>
+          
+          
+          <button type="submit"  class="btn btn-primary w-45">
+            <i class="fa fa-save"></i> Create
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
