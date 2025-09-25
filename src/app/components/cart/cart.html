@@ -1,67 +1,74 @@
 <div class="card">
+  @if (!orderPlaced()) {
     <div class="row">
-        <div class="col-md-8 cart">
-            <div class="title">
-                <div class="row">
-                    <div class="col">Shopping Cart</div>
-                </div>
-                <div class="row">
-                    <div class="col text-center">Product</div>
-                    <div class="col align-self-center">Quantity</div>
-                    <div class="col align-self-center">Price</div>
-                </div>
-            </div>
-
-            @for (product of products(); track product.productId) {
-            <div class="row border-top border-bottom">
-                <div class="row main align-items-center">
-
-                    <div class="col-2">
-                        <img [src]="product.productImageUrl" class="card-img-top product-img"
-                            alt="{{ product.productName }}" />
-                    </div>
-
-                    <div class="col">
-                        <div class="row">{{ product.productName }}</div>
-                    </div>
-
-                    <div class="col">
-                        <span class="border px-3">{{ product.quantity }}</span>
-                    </div>
-
-                    <div class="col">₹{{ product.productPrice }}</div>
-
-                    <div class="col">₹{{ product.quantity * product.productPrice }}</div>
-                </div>
-            </div>
-            }
-
-            <div class="back-to-shop">
-                <a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span>
-            </div>
+      <div class="col-md-8 cart">
+        <div class="title">
+          <div class="row">
+            <div class="col">Shopping Cart</div>
+          </div>
         </div>
 
-        <!-- Summary Section -->
-        <div class="col-md-4 summary">
-            <div>
-                <h5><b>Summary</b></h5>
-            </div>
-            <hr>
-
-            <!-- Total Items and Price -->
-            <div class="row">
-                <div class="col" style="padding-left:0;">ITEMS {{ products().length }}</div>
-                <div class="col text-right">₹ {{ calculateTotalPrice() }}</div>
-            </div>
-
-            <!-- Total Price -->
-            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">₹ {{ calculateTotalPrice() }}</div>
-            </div>
-
-            <!-- Place Order Button -->
-            <button class="btn">Place Order</button>
+        <div class="subtitle">
+          <div class="row">
+            <div class="col text-center">Product</div>
+            <div class="col text-center">Quantity</div>
+            <div class="col align-self-center">Price</div>
+            <div class="col align-self-center">Total Price</div>
+          </div>
         </div>
+
+        @for (product of products(); track product.productId) {
+          <div class="row border-top border-bottom">
+            <div class="row main align-items-center">
+              <div class="col-2">
+                <img [src]="product.productImageUrl" class="card-img-top product-img" alt="{{ product.productName }}" />
+              </div>
+              <div class="col">
+                <div class="row">{{ product.productName }}</div>
+              </div>
+              <div class="col">
+                <span class="border px-3">{{ product.quantity }}</span>
+              </div>
+              <div class="col">₹{{ product.productPrice }}</div>
+              <div class="col">₹{{ product.quantity * product.productPrice }}</div>
+            </div>
+          </div>
+        }
+
+        <div class="back-to-shop">
+          <a routerLink="/products"><i class="fa-solid fa-arrow-left"></i></a>
+        </div>
+      </div>
+
+      <div class="col-md-4 summary">
+        <div><p><b>Summary</b></p></div>
+
+        <div class="summary-content">
+          <div class="row">
+            <div class="col"><b>Total Items: </b></div>
+            <div class="col text-center">{{ products().length }}</div>
+          </div>
+
+          <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+            <div class="col"><b>Total Price: </b></div>
+            <div class="col text-center"><b>₹</b>{{ calculateTotalPrice() }}</div>
+          </div>
+        </div>
+
+        <div class="row">
+          <button (click)="placeOrder()" class="btn">Place Order</button>
+        </div>
+      </div>
     </div>
+  }
+
+  @if (orderPlaced()) {
+    <div class="row">
+      <div class="col text-center">
+        <div class="alert alert-info" role="alert">
+          Your cart is empty. Thank you for your order!
+        </div>
+      </div>
+    </div>
+  }
 </div>

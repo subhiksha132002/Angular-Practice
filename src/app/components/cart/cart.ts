@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './cart.html',
   styleUrl: './cart.css'
 })
@@ -13,6 +13,7 @@ export class Cart {
   products = signal<any[]>([]);
   loading = signal(true);
   error = signal<string | null>(null);
+  orderPlaced = signal(false);
 
   private http = inject(HttpClient);
 
@@ -36,7 +37,20 @@ console.error(err);
       }
     });
 }
-calculateTotalPrice(){
-  
+
+calculateTotalPrice() {
+    return this.products().reduce((total, product) => {
+      return total + (product.quantity * product.productPrice);
+    }, 0);
+  }
+
+placeOrder(){
+  alert("Order Placed Successfully");
+
+  this.orderPlaced.set(true);  
+
+  this.products.set([]); 
 }
+
+
 }
