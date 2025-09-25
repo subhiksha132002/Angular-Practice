@@ -2,16 +2,20 @@
 transition: transform 0.2s,box-shadow 0.2s;
 }
 
-.card:hover {
-    transform: scale(1.03);
-    box-shadow: 0 4px 12px rgpa(0,0,0,0.15);
-}
-
 .card-img-top {
     object-fit: cover;
     height: 200px;
 }
 
 .card-footer button{
+    font-weight: bold;
+}
+
+h4{
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+.btn{
+    font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
 }
