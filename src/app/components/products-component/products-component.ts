@@ -72,7 +72,7 @@ export class ProductsComponent {
       next: (response) => {
         alert('Product added to cart');
         console.log(response);  
-        this.router.navigate(['/cart']);  
+
       },
       error: (err) => {
         console.error('Error adding product to cart:', err);

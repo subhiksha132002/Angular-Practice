@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,4 +10,33 @@ import { RouterLink } from '@angular/router';
 })
 export class Cart {
 
+  products = signal<any[]>([]);
+  loading = signal(true);
+  error = signal<string | null>(null);
+
+  private http = inject(HttpClient);
+
+  constructor() {
+    this.loadCartItems();
+  }
+
+  loadCartItems() {
+    this.loading.set(true);
+    this.error.set(null);
+
+    this.http.get<any>("https://freeapi.miniprojectideas.com/api/amazon/GetAllCartItems").subscribe({
+      next: (response) => {
+        this.products.set(response.data);
+        this.loading.set(false);
+  },
+  error: (err) => {
+        this.error.set('Failed to fetch products');
+this.loading.set(false);
+console.error(err);
+      }
+    });
+}
+calculateTotalPrice(){
+  
+}
 }
