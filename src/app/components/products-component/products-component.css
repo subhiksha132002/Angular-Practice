@@ -4,3 +4,20 @@
   object-fit: cover;    
   object-position: center; 
 }
+
+.quantity-group{
+  border: 3px solid rgb(233, 233, 52);
+  border-radius: 10px;
+}
+
+.px-2{
+  font-weight: bold;
+  font-size: large;
+}
+
+.btn-custom{
+  background-color: rgb(233, 233, 52);
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+}

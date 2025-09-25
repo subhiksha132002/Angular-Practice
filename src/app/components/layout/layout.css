@@ -1,0 +1,12 @@
+.navbar-brand{
+    font-style: italic;
+    font-weight: bold;
+    color: rgb(233, 233, 52);
+    margin:10px 20px;
+}
+.nav-item{
+    font-family: 'Times New Roman', Times, serif ;
+    margin: 10px 15px;
+    font-size: large;
+    
+}
