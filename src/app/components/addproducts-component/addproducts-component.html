@@ -13,9 +13,11 @@
           </div>
           <div class="col-6">
             <input type="text" formControlName="ProductName" class="form-control" placeholder="Enter product name" />
-            <div *ngIf="productForm.get('ProductName')?.touched && productForm.get('ProductName')?.invalid" class="text-danger">
+            @if(productForm.get('ProductName')?.touched && productForm.get('ProductName')?.invalid){ 
+            <div  class="text-danger">
               Product name is required.
             </div>
+          }
           </div>
         </div>
 
@@ -26,9 +28,11 @@
           </div>
           <div class="col-6">
             <input type="text" formControlName="ProductSku" class="form-control" placeholder="Enter SKU" />
-            <div *ngIf="productForm.get('ProductSku')?.touched && productForm.get('ProductSku')?.invalid" class="text-danger">
+            @if(productForm.get('ProductSku')?.touched && productForm.get('ProductSku')?.invalid){ 
+            <div  class="text-danger">
               SKU is required (max 5 chars).
             </div>
+          }
           </div>
         </div>
 
@@ -39,9 +43,11 @@
           </div>
           <div class="col-6">
             <input type="number" formControlName="ProductPrice" class="form-control" placeholder="Enter price" />
-            <div *ngIf="productForm.get('ProductPrice')?.touched && productForm.get('ProductPrice')?.invalid" class="text-danger">
+            @if(productForm.get('ProductPrice')?.touched && productForm.get('ProductPrice')?.invalid){ 
+            <div  class="text-danger">
               Price must be greater than 0.
             </div>
+          }
           </div>
         </div>
 
@@ -72,6 +78,11 @@
           </div>
           <div class="col-6">
             <input type="date" formControlName="CreatedDate" class="form-control" />
+            @if(productForm.get('CreatedDate')?.touched && productForm.get('CreatedDate')?.invalid){ 
+            <div  class="text-danger">
+              Created Date is required.
+            </div>
+          }
           </div>
         </div>
 
@@ -82,9 +93,11 @@
           </div>
           <div class="col-6">
             <input type="text" formControlName="DeliveryTimeSpan" class="form-control" placeholder="Enter delivery time" />
-            <div *ngIf="productForm.get('DeliveryTimeSpan')?.touched && productForm.get('DeliveryTimeSpan')?.invalid" class="text-danger">
+            @if(productForm.get('DeliveryTimeSpan')?.touched && productForm.get('DeliveryTimeSpan')?.invalid){ 
+            <div  class="text-danger">
               Delivery time span is required.
             </div>
+          }
           </div>
         </div>
 
@@ -105,9 +118,11 @@
           </div>
           <div class="col-6">
             <input type="text" formControlName="ProductImageUrl" class="form-control" placeholder="Enter image URL" />
-            <div *ngIf="productForm.get('ProductImageUrl')?.touched && productForm.get('ProductImageUrl')?.invalid" class="text-danger">
+            @if(productForm.get('ProductImageUrl')?.touched && productForm.get('ProductImageUrl')?.invalid){ 
+            <div  class="text-danger">
               Product image is required.
             </div>
+          }
           </div>
         </div>
 

@@ -3,12 +3,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ProductModel, APIResponse } from '../../models/product';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-addproducts-component',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './addproducts-component.html',
   styleUrls: ['./addproducts-component.css']
 })
@@ -27,7 +26,7 @@ export class AddproductsComponent implements OnInit {
       ProductPrice: [0, [Validators.required, Validators.min(1)]],
       ProductShortName: [""],
       ProductDescription: [""],
-      CreatedDate: [new Date().toISOString()],
+      CreatedDate: ["",Validators.required],
       DeliveryTimeSpan: ["", Validators.required],
       CategoryId: [0],
       ProductImageUrl: ["", Validators.required]
@@ -39,7 +38,6 @@ export class AddproductsComponent implements OnInit {
 
     if (this.productForm.valid) {
       const productData: ProductModel = {
-        ProductId: 0,
         ...this.productForm.value
       };
 
@@ -66,7 +64,7 @@ export class AddproductsComponent implements OnInit {
       ProductPrice: 0,
       ProductShortName: "",
       ProductDescription: "",
-      CreatedDate: new Date().toISOString(),
+      CreatedDate: "",
       DeliveryTimeSpan: "",
       CategoryId: 0,
       ProductImageUrl: ""
