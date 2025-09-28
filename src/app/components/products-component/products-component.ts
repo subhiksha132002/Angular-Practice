@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './products-component.html',
   styleUrls: ['./products-component.css']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit{
 
   products = signal<any[]>([]); 
   loading = signal(true); 
@@ -17,8 +17,10 @@ export class ProductsComponent {
   router = inject(Router); 
   quantityMap: { [productId: number]: number } = {}; 
 
-  constructor() {
-    this.loadProducts();
+  constructor() {}
+
+  ngOnInit() {
+    this.loadProducts(); 
   }
 
   
