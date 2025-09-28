@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ProductsComponent } from './products-component';
 
 
-describe('ProductsComponent - Basic Tests', () => {
+describe('ProductsComponent', () => {
   let component: ProductsComponent;
   let fixture: ComponentFixture<ProductsComponent>;
   let httpMock: HttpTestingController;
