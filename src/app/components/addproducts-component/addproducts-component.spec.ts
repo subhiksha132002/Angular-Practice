@@ -13,7 +13,7 @@ describe('AddproductsComponent', () => {
   let component: AddproductsComponent;
   let fixture: ComponentFixture<AddproductsComponent>;
   let httpMock: HttpTestingController; 
-  let mockRouter: jasmine.SpyObj<Router>; 
+  //let mockRouter: jasmine.SpyObj<Router>; 
 
 
   beforeEach(async () => {
@@ -27,7 +27,7 @@ describe('AddproductsComponent', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        { provide: Router, useValue: routerSpy }
+        //{ provide: Router, useValue: routerSpy }
       ]
     }).compileComponents();
 
@@ -37,7 +37,7 @@ describe('AddproductsComponent', () => {
 
 
     httpMock = TestBed.inject(HttpTestingController);
-    mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    //mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
 
     fixture.detectChanges();
   });
@@ -56,8 +56,6 @@ describe('AddproductsComponent', () => {
     expect(component.productForm).toBeDefined();
     expect(component.productForm.get('ProductName')?.value).toBe('');
     expect(component.productForm.get('ProductPrice')?.value).toBe(0);
-    expect(component.productForm.get('ProductSku')?.value).toBe('');
-
   });
 
   it('should show form as invalid when required fields are empty', () => {
@@ -67,25 +65,14 @@ describe('AddproductsComponent', () => {
   it('should show form as valid when all required fields are filled', () => {
     component.productForm.patchValue({
       ProductName: 'Test Product',
-      ProductSku: 'TP001',
       ProductPrice: 50,
-      CreatedDate: '2024-01-01',
-      DeliveryTimeSpan: '2-3 days',
-      ProductImageUrl: 'https://example.com/image.jpg'
+      StockQuantity:10,
+      ImageUrl: 'https://example.com/image.jpg'
     });
 
     expect(component.productForm.valid).toBeTruthy();
   });
 
-  it('should reject invalid ProductSku (more than 5 characters)', () => {
-    const skuControl = component.productForm.get('ProductSku');
-
-    skuControl?.setValue('12345');
-    expect(skuControl?.valid).toBeTruthy();
-
-    skuControl?.setValue('123456');
-    expect(skuControl?.hasError('maxlength')).toBeTruthy();
-  });
 
   it('should reject invalid ProductPrice (0 or negative)', () => {
     const priceControl = component.productForm.get('ProductPrice');
@@ -105,7 +92,7 @@ describe('AddproductsComponent', () => {
 
 
     expect(window.alert).toHaveBeenCalledWith('Please fill in all required fields');
-    httpMock.expectNone('https://freeapi.miniprojectideas.com/api/amazon/CreateProduct');
+    httpMock.expectNone('http://localhost:5160/api/Products');
   });
 
   it('should successfully submit valid form data', () => {
@@ -114,14 +101,10 @@ describe('AddproductsComponent', () => {
 
     const validProduct = {
       ProductName: 'Test Product',
-      ProductSku: 'TP001',
       ProductPrice: 100,
-      ProductShortName: 'Test',
       ProductDescription: 'A test product',
-      CreatedDate: '2024-01-01',
-      DeliveryTimeSpan: '2-3 days',
-      CategoryId: 1,
-      ProductImageUrl: 'https://example.com/image.jpg'
+      StockQuantity: 10,
+      ImageUrl: 'https://example.com/image.jpg'
     };
 
     component.productForm.patchValue(validProduct);
@@ -134,7 +117,7 @@ describe('AddproductsComponent', () => {
 
     component.onSubmit();
 
-    const req = httpMock.expectOne('https://freeapi.miniprojectideas.com/api/amazon/CreateProduct');
+    const req = httpMock.expectOne('http://localhost:5160/api/Products');
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(validProduct);
 
@@ -150,17 +133,15 @@ describe('AddproductsComponent', () => {
 
     component.productForm.patchValue({
       ProductName: 'Test Product',
-      ProductSku: 'TP001',
       ProductPrice: 100,
-      CreatedDate: '2024-01-01',
-      DeliveryTimeSpan: '2-3 days',
-      ProductImageUrl: 'https://example.com/image.jpg'
+      StockQuantity:10,
+      ImageUrl: 'https://example.com/image.jpg'
     });
 
     component.onSubmit();
 
     // Simulate server error
-    const req = httpMock.expectOne('https://freeapi.miniprojectideas.com/api/amazon/CreateProduct');
+    const req = httpMock.expectOne('http://localhost:5160/api/Products');
     req.error(new ProgressEvent('error'), { status: 500, statusText: 'Server Error' });
 
     expect(console.error).toHaveBeenCalled();
@@ -170,7 +151,8 @@ describe('AddproductsComponent', () => {
   it('should reset form when reset button is clicked', () => {
     component.productForm.patchValue({
       ProductName: 'Test Product',
-      ProductPrice: 100
+      ProductPrice: 100,
+      StockQuantity: 10
     });
 
     component.resetForm();
@@ -184,8 +166,8 @@ describe('AddproductsComponent', () => {
     const compiled = fixture.nativeElement;
 
     expect(compiled.querySelector('input[formControlName="ProductName"]')).toBeTruthy();
-    expect(compiled.querySelector('input[formControlName="ProductSku"]')).toBeTruthy();
     expect(compiled.querySelector('input[formControlName="ProductPrice"]')).toBeTruthy();
+    expect(compiled.querySelector('input[formControlName="StockQuantity"]')).toBeTruthy();
     expect(compiled.querySelector('button[type="submit"]')).toBeTruthy();
     expect(compiled.querySelector('button[type="button"]')).toBeTruthy();
   });

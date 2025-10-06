@@ -49,10 +49,7 @@ describe('Cart Component', () => {
   });
 
   afterEach(() => {
-    try {
       httpMock.verify();
-    } catch (e) {
-    }
   });
 
   it('should create the component', () => {

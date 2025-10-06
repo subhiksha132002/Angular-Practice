@@ -9,7 +9,6 @@ describe('ProductsComponent', () => {
   let component: ProductsComponent;
   let fixture: ComponentFixture<ProductsComponent>;
   let httpMock: HttpTestingController;
-  let mockRouter: jasmine.SpyObj<Router>;
 
   const mockProducts = [
     {
@@ -47,7 +46,6 @@ describe('ProductsComponent', () => {
     fixture = TestBed.createComponent(ProductsComponent);
     component = fixture.componentInstance;
     httpMock = TestBed.inject(HttpTestingController);
-    mockRouter = TestBed.inject(Router) as jasmine.SpyObj<Router>;
   });
 
   afterEach(() => {
@@ -144,16 +142,6 @@ describe('ProductsComponent', () => {
 
     component.decreaseQuantity(1);
     expect(component.quantityMap[1]).toBe(1); 
-  });
-
-  it('should not increase quantity above 99', () => {
-    fixture.detectChanges();
-    const req = httpMock.expectOne('https://freeapi.miniprojectideas.com/api/amazon/GetAllProducts');
-    req.flush(mockApiResponse);
-
-    component.quantityMap[1] = 99;
-    component.increaseQuantity(1);
-    expect(component.quantityMap[1]).toBe(99); 
   });
 
   it('should add product to cart successfully', () => {

@@ -24,21 +24,6 @@
         
         <div class="row mb-3">
           <div class="col-6 text-start">
-            <label class="form-label">Product SKU</label>
-          </div>
-          <div class="col-6">
-            <input type="text" formControlName="ProductSku" class="form-control" placeholder="Enter SKU" />
-            @if(productForm.get('ProductSku')?.touched && productForm.get('ProductSku')?.invalid){ 
-            <div  class="text-danger">
-              SKU is required (max 5 chars).
-            </div>
-          }
-          </div>
-        </div>
-
-        
-        <div class="row mb-3">
-          <div class="col-6 text-start">
             <label class="form-label">Product Price</label>
           </div>
           <div class="col-6">
@@ -51,13 +36,17 @@
           </div>
         </div>
 
-        
         <div class="row mb-3">
           <div class="col-6 text-start">
-            <label class="form-label">Product Short Name</label>
+            <label class="form-label">Product Stock Quantity</label>
           </div>
           <div class="col-6">
-            <input type="text" formControlName="ProductShortName" class="form-control" placeholder="Enter short name" />
+            <input type="number" formControlName="StockQuantity" class="form-control" placeholder="Enter stock quantity of the product" />
+            @if(productForm.get('StockQuantity')?.touched && productForm.get('StockQuantity')?.invalid){ 
+            <div  class="text-danger">
+              Stock Quantity must be greater than 0.
+            </div>
+          }
           </div>
         </div>
 
@@ -74,51 +63,11 @@
         
         <div class="row mb-3">
           <div class="col-6 text-start">
-            <label class="form-label">Created Date</label>
-          </div>
-          <div class="col-6">
-            <input type="date" formControlName="CreatedDate" class="form-control" />
-            @if(productForm.get('CreatedDate')?.touched && productForm.get('CreatedDate')?.invalid){ 
-            <div  class="text-danger">
-              Created Date is required.
-            </div>
-          }
-          </div>
-        </div>
-
-        
-        <div class="row mb-3">
-          <div class="col-6 text-start">
-            <label class="form-label">Delivery Time Span</label>
-          </div>
-          <div class="col-6">
-            <input type="text" formControlName="DeliveryTimeSpan" class="form-control" placeholder="Enter delivery time" />
-            @if(productForm.get('DeliveryTimeSpan')?.touched && productForm.get('DeliveryTimeSpan')?.invalid){ 
-            <div  class="text-danger">
-              Delivery time span is required.
-            </div>
-          }
-          </div>
-        </div>
-
-        
-        <div class="row mb-3">
-          <div class="col-6 text-start">
-            <label class="form-label">Category ID</label>
-          </div>
-          <div class="col-6">
-            <input type="number" formControlName="CategoryId" class="form-control" placeholder="Enter category ID" />
-          </div>
-        </div>
-
-        
-        <div class="row mb-3">
-          <div class="col-6 text-start">
             <label class="form-label">Product Image URL</label>
           </div>
           <div class="col-6">
-            <input type="text" formControlName="ProductImageUrl" class="form-control" placeholder="Enter image URL" />
-            @if(productForm.get('ProductImageUrl')?.touched && productForm.get('ProductImageUrl')?.invalid){ 
+            <input type="text" formControlName="ImageUrl" class="form-control" placeholder="Enter image URL" />
+            @if(productForm.get('ImageUrl')?.touched && productForm.get('ImageUrl')?.invalid){ 
             <div  class="text-danger">
               Product image is required.
             </div>

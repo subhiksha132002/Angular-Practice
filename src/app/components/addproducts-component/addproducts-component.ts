@@ -15,21 +15,17 @@ export class AddproductsComponent implements OnInit {
 
   productForm!: FormGroup;
   router = inject(Router);
-  private apiUrl = "https://freeapi.miniprojectideas.com/api/amazon/CreateProduct";
+  private apiUrl = "http://localhost:5160/api/Products";
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.productForm = this.fb.group({
       ProductName: ["", Validators.required],
-      ProductSku: ["", [Validators.required, Validators.maxLength(5)]],
       ProductPrice: [0, [Validators.required, Validators.min(1)]],
-      ProductShortName: [""],
       ProductDescription: [""],
-      CreatedDate: ["",Validators.required],
-      DeliveryTimeSpan: ["", Validators.required],
-      CategoryId: [0],
-      ProductImageUrl: ["", Validators.required]
+      StockQuantity:[0, [Validators.required, Validators.min(1)]],
+      ImageUrl: ["", Validators.required]
     });
   }
 
@@ -60,14 +56,10 @@ export class AddproductsComponent implements OnInit {
   resetForm(): void {
     this.productForm.reset({
       ProductName: "",
-      ProductSku: "",
       ProductPrice: 0,
-      ProductShortName: "",
       ProductDescription: "",
-      CreatedDate: "",
-      DeliveryTimeSpan: "",
-      CategoryId: 0,
-      ProductImageUrl: ""
+      StockQuantity: 0,
+      ImageUrl: ""
     });
   }
 }

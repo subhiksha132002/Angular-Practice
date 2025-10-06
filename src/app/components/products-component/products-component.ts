@@ -7,36 +7,41 @@ import { Router } from '@angular/router';
   templateUrl: './products-component.html',
   styleUrls: ['./products-component.css']
 })
-export class ProductsComponent implements OnInit{
+export class ProductsComponent implements OnInit {
 
-  products = signal<any[]>([]); 
-  loading = signal(true); 
-  error = signal<string | null>(null); 
+  products = signal<any[]>([]);
+  loading = signal(true);
+  error = signal<string | null>(null);
 
-  private http = inject(HttpClient); 
-  router = inject(Router); 
-  quantityMap: { [productId: number]: number } = {}; 
+  private http = inject(HttpClient);
+  router = inject(Router);
+  quantityMap: { [ProductId: number]: number } = {};
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
-    this.loadProducts(); 
+    this.loadProducts();
   }
 
-  
+
   loadProducts() {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.get<any>("https://freeapi.miniprojectideas.com/api/amazon/GetAllProducts").subscribe({
+    this.http.get<any>("http://localhost:5160/api/Products").subscribe({
       next: (response) => {
-        this.products.set(response.data); 
-        this.loading.set(false);
 
-        
-        this.products().forEach(product => {
-          this.quantityMap[product.productId] = 1; 
-        });
+        if (Array.isArray(response)) {
+          this.products.set(response);
+          this.loading.set(false);
+
+          this.products().forEach(product => {
+            this.quantityMap[product.productId] = 1;
+          });
+        } else {
+          this.error.set('Invalid response format. Expected an array of products.');
+          this.loading.set(false); // Set loading to false even in case of an error
+        }
       },
       error: (err) => {
         this.error.set('Failed to fetch products');
@@ -46,34 +51,34 @@ export class ProductsComponent implements OnInit{
     });
   }
 
-  
+
   increaseQuantity(productId: number) {
-    if (this.quantityMap[productId] < 99) { 
+    if (this.quantityMap[productId] < 99) {
       this.quantityMap[productId]++;
     }
   }
 
-  
+
   decreaseQuantity(productId: number) {
-    if (this.quantityMap[productId] > 1) { 
+    if (this.quantityMap[productId] > 1) {
       this.quantityMap[productId]--;
     }
   }
 
-  
+
   addToCart(product: any) {
     const cartItem = {
-      CartId: 0,  
-      CustId: 0,  
-      ProductId: product.productId,  
-      Quantity: this.quantityMap[product.productId], 
-      AddedDate: new Date().toISOString()  
+      CartId: 0,
+      CustId: 0,
+      ProductId: product.productId,
+      Quantity: this.quantityMap[product.productId],
+      AddedDate: new Date().toISOString()
     };
 
     this.http.post<any>("https://freeapi.miniprojectideas.com/api/amazon/AddToCart", cartItem).subscribe({
       next: (response) => {
         alert('Product added to cart');
-        console.log(response);  
+        console.log(response);
 
       },
       error: (err) => {
