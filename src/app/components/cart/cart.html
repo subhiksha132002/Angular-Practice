@@ -1,74 +1,108 @@
 <div class="card">
-  @if (!orderPlaced()) {
-    <div class="row">
-      <div class="col-md-8 cart">
-        <div class="title">
-          <div class="row">
-            <div class="col">Shopping Cart</div>
-          </div>
-        </div>
-
-        <div class="subtitle">
-          <div class="row">
-            <div class="col-4 text-center">Product</div>
-            <div class="col-2 text-center">Quantity</div>
-            <div class="col text-center">Price</div>
-            <div class="col text-center ">Total Price</div>
-          </div>
-        </div>
-
-        @for (product of products(); track product.ProductId) {
-          <div class="row border-top border-bottom">
-            <div class="row main align-items-center">
-              <div class="col-2">
-                <img [src]="product.ImageUrl" class="card-img-top product-img" alt="{{ product.ProductName }}" />
-              </div>
-              <div class="col">
-                <div class="row">{{ product.ProductName }}</div>
-              </div>
-              <div class="col">
-                <span class="border px-3">{{ product.quantity }}</span>
-              </div>
-              <div class="col">₹{{ product.ProductPrice }}</div>
-              <div class="col">₹{{ product.quantity * product.ProductPrice }}</div>
-            </div>
-          </div>
-        }
-
-        <div class="back-to-shop">
-          <a routerLink="/products"><i class="fa-solid fa-arrow-left"></i></a>
-        </div>
-      </div>
-
-      <div class="col-md-4 summary">
-        <div><p><b>Summary</b></p></div>
-
-        <div class="summary-content">
-          <div class="row">
-            <div class="col"><b>Total Items: </b></div>
-            <div class="col text-center">{{ products().length }}</div>
-          </div>
-
-          <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-            <div class="col"><b>Total Price: </b></div>
-            <div class="col text-center"><b>₹</b>{{ calculateTotalPrice() }}</div>
-          </div>
-        </div>
-
-        <div class="row">
-          <button (click)="placeOrder()" class="btn">Place Order</button>
-        </div>
+  @if (loading()) {
+    <div class="d-flex justify-content-center p-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
   }
 
+  @if (error() && !loading()) {
+    <div class="alert alert-danger m-3" role="alert">
+      {{ error() }}
+    </div>
+  }
+
+  @if (!loading() && !error() && !orderPlaced() && cartData()) {
+    @if (cartData()!.Items.length > 0) {
+      <div class="row">
+        <div class="col-md-8 cart">
+          <div class="title">
+            <div class="row">
+              <div class="col">Shopping Cart</div>
+            </div>
+          </div>
+
+          <div class="subtitle">
+            <div class="row">
+              <div class="col-4 text-center">Product</div>
+              <div class="col-2 text-center">Quantity</div>
+              <div class="col text-center">Price</div>
+              <div class="col text-center">Total Price</div>
+            </div>
+          </div>
+
+          @for (item of cartData()!.Items; track item.ProductId) {
+            <div class="row border-top border-bottom">
+              <div class="row main align-items-center">
+                <div class="col-2">
+                  <img [src]="item.ImageUrl" class="card-img-top product-img" alt="{{ item.ProductName }}" />
+                </div>
+                <div class="col">
+                  <div class="row">{{ item.ProductName }}</div>
+                </div>
+                <div class="col">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <button class="btn btn-sm btn-outline-secondary" (click)="decreaseQuantity(item.ProductId)">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                    <span class="mx-3">{{ item.Quantity }}</span>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="increaseQuantity(item.ProductId)">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col text-center">₹{{ item.ProductPrice }}</div>
+                <div class="col text-center">₹{{ item.Quantity * item.ProductPrice }}</div>
+              </div>
+            </div>
+          }
+
+          <div class="back-to-shop">
+            <a routerLink="/products"><i class="fa-solid fa-arrow-left"></i> Back to Shop</a>
+          </div>
+        </div>
+
+        <div class="col-md-4 summary">
+          <div><p><b>Summary</b></p></div>
+
+          <div class="summary-content">
+            <div class="row">
+              <div class="col"><b>Total Items: </b></div>
+              <div class="col text-center">{{ getTotalItems() }}</div>
+            </div>
+
+            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+              <div class="col"><b>Total Price: </b></div>
+              <div class="col text-center"><b>₹</b>{{ calculateTotalPrice() }}</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <button (click)="placeOrder()" class="btn">Place Order</button>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="row">
+        <div class="col text-center p-5">
+          <div class="alert alert-info" role="alert">
+            Your cart is empty. Start shopping!
+          </div>
+          <a routerLink="/products" class="btn btn-primary">Go to Products</a>
+        </div>
+      </div>
+    }
+  }
 
   @if (orderPlaced()) {
     <div class="row">
-      <div class="col text-center">
-        <div class="alert alert-info" role="alert">
-          Your cart is empty. Thank you for your order!
+      <div class="col text-center p-5">
+        <div class="alert alert-success" role="alert">
+          <h4>Order Placed Successfully!</h4>
+          <p>Thank you for your order. Your cart is now empty.</p>
         </div>
+        <a routerLink="/products" class="btn btn-primary">Continue Shopping</a>
       </div>
     </div>
   }

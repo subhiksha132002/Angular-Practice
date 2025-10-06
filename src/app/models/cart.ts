@@ -13,16 +13,20 @@ export class AddCartItem {
 export class CartItem {
   ProductId: number;
   ProductName: string;
+  ProductPrice: number;
+  ImageUrl: string;
   Quantity: number;
 
   constructor() {
     this.ProductId = 0;
     this.ProductName = "";
+    this.ProductPrice = 0;
+    this.ImageUrl = "";
     this.Quantity = 0;
   }
 }
 
-export class Cart {
+export class CartModel {
   CartId: number;
   CustomerId: number;
   CustomerName: string;
@@ -35,5 +39,25 @@ export class Cart {
     this.CustomerName = "";
     this.Email = "";
     this.Items = [];
+  }
+}
+
+export class UpdateCartItemModel {
+  CustomerId: number;
+  ProductId: number;
+  Quantity: number;
+
+  constructor() {
+    this.CustomerId = 0;
+    this.ProductId = 0;
+    this.Quantity = 0;
+  }
+}
+
+export class PlaceOrderModel {
+  CustomerId: number;
+
+  constructor(customerId: number) {
+    this.CustomerId = customerId;
   }
 }
