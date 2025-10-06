@@ -1,6 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ProductModel } from '../../models/product';
+import {AddCartItem} from '../../models/cart'
 
 @Component({
   selector: 'app-products-component',
@@ -9,13 +11,16 @@ import { Router } from '@angular/router';
 })
 export class ProductsComponent implements OnInit {
 
-  products = signal<any[]>([]);
+  products = signal<ProductModel[]>([]);
   loading = signal(true);
   error = signal<string | null>(null);
 
   private http = inject(HttpClient);
   router = inject(Router);
-  quantityMap: { [ProductId: number]: number } = {};
+
+  private apiUrl = 'http://localhost:5160/api';
+
+  private tempCustomerId = 1;
 
   constructor() { }
 
@@ -28,54 +33,42 @@ export class ProductsComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.get<any>("http://localhost:5160/api/Products").subscribe({
-      next: (response) => {
+    console.log('Attempting to fetch products from:', `${this.apiUrl}/Products`);
 
+    this.http.get<ProductModel[]>(`${this.apiUrl}/Products`).subscribe({
+      next: (response) => {
+        console.log('Products response:', response);
         if (Array.isArray(response)) {
           this.products.set(response);
           this.loading.set(false);
-
-          this.products().forEach(product => {
-            this.quantityMap[product.productId] = 1;
-          });
+          console.log('Products loaded successfully:', this.products());
         } else {
           this.error.set('Invalid response format. Expected an array of products.');
           this.loading.set(false); // Set loading to false even in case of an error
+          console.error('Invalid response format:', response);
         }
       },
       error: (err) => {
         this.error.set('Failed to fetch products');
         this.loading.set(false);
         console.error(err);
+        console.error('Error fetching products:', err);
+        console.error('Error status:', err.status);
+        console.error('Error message:', err.message);
       }
     });
   }
 
-
-  increaseQuantity(productId: number) {
-    if (this.quantityMap[productId] < 99) {
-      this.quantityMap[productId]++;
-    }
-  }
-
-
-  decreaseQuantity(productId: number) {
-    if (this.quantityMap[productId] > 1) {
-      this.quantityMap[productId]--;
-    }
-  }
-
-
-  addToCart(product: any) {
-    const cartItem = {
-      CartId: 0,
-      CustId: 0,
-      ProductId: product.productId,
-      Quantity: this.quantityMap[product.productId],
-      AddedDate: new Date().toISOString()
+  addToCart(product: ProductModel) {
+    const cartItem: AddCartItem = {
+      CustomerId: this.tempCustomerId,
+      ProductId: product.ProductId,
+      Quantity: 1
     };
 
-    this.http.post<any>("https://freeapi.miniprojectideas.com/api/amazon/AddToCart", cartItem).subscribe({
+    console.log('Adding to cart:', cartItem);
+
+    this.http.post<any>(`${this.apiUrl}/Carts/AddItemToCart`, cartItem).subscribe({
       next: (response) => {
         alert('Product added to cart');
         console.log(response);

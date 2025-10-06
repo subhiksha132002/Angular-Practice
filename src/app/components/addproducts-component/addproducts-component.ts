@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { ProductModel, APIResponse } from '../../models/product';
+import { ProductModel } from '../../models/product';
 
 @Component({
   selector: 'app-addproducts-component',
@@ -15,7 +15,7 @@ export class AddproductsComponent implements OnInit {
 
   productForm!: FormGroup;
   router = inject(Router);
-  private apiUrl = "http://localhost:5160/api/Products";
+  private apiUrl = "http://localhost:5160/api/Products/CreateProduct";
 
   constructor(private fb: FormBuilder, private http: HttpClient) {}
 
@@ -37,7 +37,7 @@ export class AddproductsComponent implements OnInit {
         ...this.productForm.value
       };
 
-      this.http.post<APIResponse>(this.apiUrl, productData).subscribe({
+      this.http.post<ProductModel[]>(this.apiUrl, productData).subscribe({
         next: (res) => {
           console.log("Product created Successfully", res);
           alert("Product created Successfully!");

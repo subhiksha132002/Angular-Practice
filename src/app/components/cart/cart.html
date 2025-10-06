@@ -17,20 +17,20 @@
           </div>
         </div>
 
-        @for (product of products(); track product.productId) {
+        @for (product of products(); track product.ProductId) {
           <div class="row border-top border-bottom">
             <div class="row main align-items-center">
               <div class="col-2">
-                <img [src]="product.productImageUrl" class="card-img-top product-img" alt="{{ product.productName }}" />
+                <img [src]="product.ImageUrl" class="card-img-top product-img" alt="{{ product.ProductName }}" />
               </div>
               <div class="col">
-                <div class="row">{{ product.productName }}</div>
+                <div class="row">{{ product.ProductName }}</div>
               </div>
               <div class="col">
                 <span class="border px-3">{{ product.quantity }}</span>
               </div>
-              <div class="col">₹{{ product.productPrice }}</div>
-              <div class="col">₹{{ product.quantity * product.productPrice }}</div>
+              <div class="col">₹{{ product.ProductPrice }}</div>
+              <div class="col">₹{{ product.quantity * product.ProductPrice }}</div>
             </div>
           </div>
         }

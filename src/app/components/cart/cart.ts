@@ -25,9 +25,9 @@ export class Cart {
     this.loading.set(true);
     this.error.set(null);
 
-    this.http.get<any>("https://freeapi.miniprojectideas.com/api/amazon/GetAllCartItems").subscribe({
+    this.http.get<any>("http://localhost:5160/api/Carts").subscribe({
       next: (response) => {
-        this.products.set(response.data);
+        this.products.set(response);
         this.loading.set(false);
   },
   error: (err) => {
@@ -40,7 +40,7 @@ console.error(err);
 
 calculateTotalPrice() {
     return this.products().reduce((total, product) => {
-      return total + (product.quantity * product.productPrice);
+      return total + (product.quantity * product.ProductPrice);
     }, 0);
   }
 
