@@ -4,7 +4,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting, HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { AddproductsComponent } from './addproducts-component';
-import { ProductModel, APIResponse } from '../../models/product';
+import { ProductModel } from '../../models/product';
 
 
 

@@ -47,6 +47,7 @@ describe('Layout', () => {
     expect(routerLinks[0].href).toContain('/products');
     expect(routerLinks[1].href).toContain('/add-product');
     expect(routerLinks[2].href).toContain('/cart');
+    //expect(routerLinks[3].href).toContain('/order');
 
   });
 });

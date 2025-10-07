@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CartModel, UpdateCartItemModel, PlaceOrderModel } from '../../models/cart'
 
 
@@ -18,6 +18,7 @@ export class Cart {
   orderPlaced = signal(false);
 
   private http = inject(HttpClient);
+  private router = inject(Router);
   private apiUrl = 'http://localhost:5160/api';
 
   private tempCustomerId = 1;
@@ -173,6 +174,10 @@ calculateTotalPrice(): number {
           Email: '',
           Items: []
         });
+
+        //this.router.navigate(['/order'], {
+          //state: { orderPlaced: true }
+        //});
       },
       error: (err) => {
         console.error('Error placing order:', err);

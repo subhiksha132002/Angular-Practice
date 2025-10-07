@@ -13,7 +13,7 @@
     </div>
   }
 
-  @if (!loading() && !error() && !orderPlaced() && cartData()) {
+  @if (!loading() && !error() && cartData()) {
     @if (cartData()!.Items.length > 0) {
       <div class="row">
         <div class="col-md-8 cart">
@@ -102,17 +102,5 @@
         </div>
       </div>
     }
-  }
-
-  @if (orderPlaced()) {
-    <div class="row">
-      <div class="col text-center p-5">
-        <div class="alert alert-success" role="alert">
-          <h4>Order Placed Successfully!</h4>
-          <p>Thank you for your order. Your cart is now empty.</p>
-        </div>
-        <a routerLink="/products" class="btn btn-primary">Continue Shopping</a>
-      </div>
-    </div>
   }
 </div>
