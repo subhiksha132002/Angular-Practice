@@ -76,15 +76,13 @@ hr {
 
 
 .btn {
-    border: 3px solid rgb(233, 233, 52);
+    border: 2px solid rgb(233, 233, 52);
     background-color: rgb(233, 233, 52);
-    border-radius: 50px;
+    border-radius: 10px;
     color: black;
-    width: 100%;
-    font-size: large;
+    font-size: medium;
     font-weight:bold;
     font-family: 'Times New Roman', Times, serif;
-    margin-top: 4vh;
     padding: 1vh;
 }
 

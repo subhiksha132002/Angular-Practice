@@ -26,13 +26,14 @@
           <div class="subtitle">
             <div class="row">
               <div class="col-4 text-center">Product</div>
-              <div class="col-2 text-center">Quantity</div>
+              <div class="col text-center">Quantity</div>
               <div class="col text-center">Price</div>
               <div class="col text-center">Total Price</div>
+              <div class="col text-center">Remove</div>
             </div>
           </div>
 
-          @for (item of cartData()!.Items; track item.ProductId) {
+          @for (item of cartData()!.Items; track item.CartItemId) {
             <div class="row border-top border-bottom">
               <div class="row main align-items-center">
                 <div class="col-2">
@@ -54,6 +55,14 @@
                 </div>
                 <div class="col text-center">₹{{ item.ProductPrice }}</div>
                 <div class="col text-center">₹{{ item.Quantity * item.ProductPrice }}</div>
+
+                <div class="col">
+                  <div class="d-flex align-items-center justify-content-center">
+                    <button class="btn btn-sm btn-outline-secondary" (click)="deleteCartItem(item.CartItemId)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           }

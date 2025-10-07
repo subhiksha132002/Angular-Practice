@@ -110,6 +110,30 @@ export class Cart {
     });
   }
 
+  deleteCartItem(cartItemId:number){
+    if (!confirm('Are you sure you want to remove this item from cart?')) {
+      return;
+    }
+
+    this.http.delete(`${this.apiUrl}/Carts/${this.tempCustomerId}/Items/${cartItemId}`).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        // Remove item from local state
+        const cart = this.cartData();
+        if (cart) {
+          cart.Items = cart.Items.filter(item => item.CartItemId !== cartItemId);
+          this.cartData.set({ ...cart });
+        }
+        alert('Item removed from cart');
+      },
+      error: (err) => {
+        console.error('Error deleting cart item:', err);
+        alert('Failed to remove item from cart');
+      }
+    });
+
+  }
+
 calculateTotalPrice(): number {
     const cart = this.cartData();
     if (!cart || !cart.Items) return 0;

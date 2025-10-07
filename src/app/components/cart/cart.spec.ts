@@ -15,14 +15,12 @@ describe('Cart Component', () => {
       productId: 1,
       productName: 'Test Product 1',
       productPrice: 100,
-      quantity: 2,
       productImageUrl: 'https://example.com/image1.jpg'
     },
     {
       productId: 2,
       productName: 'Test Product 2',
       productPrice: 50,
-      quantity: 1,
       productImageUrl: 'https://example.com/image2.jpg'
     }
   ];

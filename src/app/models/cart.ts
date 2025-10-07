@@ -11,6 +11,7 @@ export class AddCartItem {
 }
 
 export class CartItem {
+  CartItemId:number;
   ProductId: number;
   ProductName: string;
   ProductPrice: number;
@@ -18,6 +19,7 @@ export class CartItem {
   Quantity: number;
 
   constructor() {
+    this.CartItemId = 0;
     this.ProductId = 0;
     this.ProductName = "";
     this.ProductPrice = 0;
